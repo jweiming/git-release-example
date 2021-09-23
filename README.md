@@ -164,4 +164,4 @@ $ git tag v1.2
 $ git push --tags
 ```
 ## Conclusion
-You have completed the exercise and you should know the various ```git``` commands to help you prepare for a release.
+You have completed the exercise and you now know the various ```git``` commands to help you prepare for a release.
