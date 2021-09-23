@@ -5,6 +5,8 @@ This is a simple exercise to cherry-pick commits for planning releases.
 
 ## Flow
 
+We will be working on three text files and making some changes to the contents of them. At various points, we will try to create releases from these changes using ```cherry-pick``` to select the commits we want. In the final version in this exercise, we will be checking for all commits that have not been included in a previous release and include them for ```v1.2``` release.
+
 ### Initial Commit
 
 1. Create the following files in the repo
@@ -22,51 +24,38 @@ $ git add file-a.txt file-b.txt file-c.txt
 $ git commit -m "intiial commit"
 $ git push
 ```
-4. Push the changes to ```main``` branch
-```
 ### Working on Dev Branch
 
 1. Create ```dev``` branch from main
-
 ```
 $ git checkout -b dev
 ```
-
 2. Check that you now have 2 branches
-
 ```
 $ git branch
 * dev
   main
 ```
-
 3. Make the following changes to file-a.txt, file-b.txt, file-c.txt
-
 ```
 $ echo "line 1" >> file-a.txt
 $ echo "line a" >> file-b.txt
 $ echo "line x" >> file-c.txt
 ```
-
 4. Commit and push your changes
-
 ```
 $ git add *
 $ git commit -m "updated file-a file-b file-c"
 $ git push --set-upstream origin dev
 ```
 
-### Release v1.0
-
+### Creating Release v1.0
 1. Create a release branch for v1.0 from ```master```
-
 ```
 $ git checkout main
 $ git checkout -b release/1.0 
 ```
-
-1. Check what commits are available for cherry-pick in ```dev```
-
+2. Check what commits are available for cherry-pick in ```dev```
 ```
 $ git checkout dev
 $ git log --oneline
@@ -74,9 +63,7 @@ cce9c81 (HEAD -> dev, origin/dev) updated file-a file-b file-c
 f3a46a3 (origin/main, origin/HEAD, release/1.0, main) intiial commit
 8f6ef75 Initial commit
 ```
-
-1. Cherry-pick the change ```cce9c81``` into ```release/1.0``` branch
-
+3. Cherry-pick the change ```cce9c81``` into ```release/1.0``` branch
 ```
 $ git checkout release/1.0
 $ git cherry-pick cce9c81
@@ -84,14 +71,13 @@ $ git cherry-pick cce9c81
  Date: Thu Sep 23 09:48:54 2021 +0800
  3 files changed, 3 insertions(+)
 ```
-
-1. Push the changes
+4. Push the changes
 
 ```
 git push --set-upstream origin release/1.0
 ```
 
-1. Merge the release back into ```main``` and tag
+5. Merge the release back into ```main``` and tag
 
 ```
 $ git checkout main
@@ -100,7 +86,7 @@ $ git tag v1.0
 $ git push --tags
 ```
 
-### Release v1.1
+### Creating Release v1.1
 
 1. Commit and push additional changes to the files
 
@@ -125,7 +111,7 @@ git push
 $ git checkout v1.0
 $ git checkout -b release/1.1
 ```
-1. Cherry pick only commits related to ```file-a.txt``` and ```file-b.txt``` for v1.1 release
+3. Cherry pick only commits related to ```file-a.txt``` and ```file-b.txt``` for v1.1 release
 
 ```
 $ git checkout dev
@@ -139,7 +125,7 @@ f3a46a3 intiial commit
 $ git cherry-pick 1c79f85 764cf19
 $ git push --set-upstream origin release/1.1
 ```
-1. Merge the relase into ```main```
+4. Merge the relase back into ```main```
 
 ```
 $ git checkout main
@@ -148,7 +134,7 @@ $ git tag v1.1
 $ git push --tags
 ```
 
-### Release v1.2
+### Creating Release v1.2
 
 1. Now we will release all remaining commits.
 
