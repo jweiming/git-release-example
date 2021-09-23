@@ -1,52 +1,38 @@
 # git-release-example
 
 ## Description
-This is a simple exercise to cherry-pick commits for release planning. 
+This is a simple exercise to cherry-pick commits for planning releases. 
 
 ## Flow
+
+### Initial Commit
+
 1. Create the following files in the repo
 ```
 $ touch file-a.txt
 $ touch file-b.txt
 $ touch file-c.txt
 ```
-
-1. Stage files for commit
+2. Stage files for commit
 ```
 $ git add file-a.txt file-b.txt file-c.txt
 ```
-
-1. Commit the changes with message "initial commit"
+3. Commit and push the changes with message "initial commit"
 ```
 $ git commit -m "intiial commit"
-[main f3a46a3] intiial commit
- 3 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 file-a.txt
- create mode 100644 file-b.txt
- create mode 100644 file-c.txt
-```
-
-1. Push the changes to ```main``` branch
-```
 $ git push
-Enumerating objects: 4, done.
-Counting objects: 100% (4/4), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (3/3), 291 bytes | 291.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:jweiming/git-release-example.git
-   8f6ef75..f3a46a3  main -> main
 ```
+4. Push the changes to ```main``` branch
+```
+### Working on Dev Branch
 
 1. Create ```dev``` branch from main
 
 ```
 $ git checkout -b dev
-Switched to a new branch 'dev'
 ```
 
-1. Check that you now have 2 branches
+2. Check that you now have 2 branches
 
 ```
 $ git branch
@@ -54,7 +40,7 @@ $ git branch
   main
 ```
 
-1. Make the following changes to file-a.txt, file-b.txt, file-c.txt
+3. Make the following changes to file-a.txt, file-b.txt, file-c.txt
 
 ```
 $ echo "line 1" >> file-a.txt
@@ -62,38 +48,16 @@ $ echo "line a" >> file-b.txt
 $ echo "line x" >> file-c.txt
 ```
 
-1. Stage all files for commit
+4. Commit and push your changes
 
 ```
 $ git add *
-```
-
-1. Commit the changes
-
-```
 $ git commit -m "updated file-a file-b file-c"
-[dev cce9c81] updated file-a file-b file-c
- 3 files changed, 3 insertions(+)
-```
-
-1. Push the new commits
-
-```
 $ git push --set-upstream origin dev
-Enumerating objects: 9, done.
-Counting objects: 100% (7/7), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (5/5), 381 bytes | 381.00 KiB/s, done.
-Total 5 (delta 0), reused 0 (delta 0)
-remote:
-remote: Create a pull request for 'dev' on GitHub by visiting:
-remote:      https://github.com/jweiming/git-release-example/pull/new/dev
-remote:
-To github.com:jweiming/git-release-example.git
- * [new branch]      dev -> dev
-Branch 'dev' set up to track remote branch 'dev' from 'origin'.
 ```
+
+### Release v1.0
+
 1. Create a release branch for v1.0 from ```master```
 
 ```
@@ -127,7 +91,7 @@ $ git cherry-pick cce9c81
 git push --set-upstream origin release/1.0
 ```
 
-1. Merge the release into ```main``` and tag it
+1. Merge the release back into ```main``` and tag
 
 ```
 $ git checkout main
@@ -136,7 +100,9 @@ $ git tag v1.0
 $ git push --tags
 ```
 
-1. Make more changes 
+### Release v1.1
+
+1. Commit and push additional changes to the files
 
 ```
 $ echo "line 2" >> file-a.txt
@@ -153,13 +119,13 @@ $ git commit -m "update file-c.txt"
 git push
 ```
 
-1. Create release branch for ```1.1``` from ```1.0```
+2. Create release branch for ```1.1``` from ```1.0```
 
 ```
 $ git checkout v1.0
 $ git checkout -b release/1.1
 ```
-1. Cherry pick only commits related to file-a.txt and file-b.txt for v1.1 release
+1. Cherry pick only commits related to ```file-a.txt``` and ```file-b.txt``` for v1.1 release
 
 ```
 $ git checkout dev
@@ -182,8 +148,11 @@ $ git tag v1.1
 $ git push --tags
 ```
 
-1. Check what are the commits that are in ```dev```, but not yet released. We can see that commits related to file-c.txt are with a + prefix, which means it has not been cherrypicked for release
+### Release v1.2
 
+1. Now we will release all remaining commits.
+
+2. Check what are the commits that are in ```dev```, but not yet released. We can see that commits related to file-c.txt are with a + prefix, which means it has not been cherrypicked for release
 ```
 $ git cherry v1.1 dev -v
 - cce9c81fde80f378fee5eeb6ba92ddc94fa567e3 updated file-a file-b file-c
@@ -191,20 +160,19 @@ $ git cherry v1.1 dev -v
 - 764cf1910ca972d4a75bd58d5358464d67edbf1a update file-b.txt
 + 8c44626ca00f981064bfbe44288e4ce0787db408 update file-c.txt
 ```
-1. Create new release branch for ```1.2``` from ```1.1
-
+3. Create new release branch for ```1.2``` from ```1.1 and push the changes
 ```
 $ git checkout v1.1
 $ git checkout -b release/1.2
 $ git cherry-pick 8c44626ca00f981064bfbe44288e4ce0787db408
 $ git push --set-upstream origin release/1.2
 ```
-
-1. Merge release into ```main```
-
+4. Merge release back into ```main``` and tag
 ```
 $ git checkout main
 $ git merge release/1.2
 $ git tag v1.2
 $ git push --tags
 ```
+## Conclusion
+You have completed the exercise and you should know the various ```git``` commands to help you prepare for a release.
