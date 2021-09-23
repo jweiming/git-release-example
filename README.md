@@ -5,7 +5,9 @@ This is a simple exercise to cherry-pick commits for planning releases.
 
 ## Flow
 
-We will be working on three text files and making some changes to the contents of them. At various points, we will try to create releases from these changes using ```cherry-pick``` to select the commits we want. In the final version in this exercise, we will be checking for all commits that have not been included in a previous release and include them for ```v1.2``` release.
+We will be working on three text files and making some changes to the contents of them. At various points, we will try to create releases from these changes using ```cherry-pick``` to select the commits we want. In the final version in this exercise, we will be checking for unreleased commits that and include them for a final ```v1.2``` release.
+
+## Steps
 
 ### Initial Commit
 
