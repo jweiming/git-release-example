@@ -124,6 +124,7 @@ $ git log --oneline
 cce9c81 updated file-a file-b file-c
 f3a46a3 intiial commit
 8f6ef75 Initial commit
+$ git checkout release/1.1
 $ git cherry-pick 1c79f85 764cf19
 $ git push --set-upstream origin release/1.1
 ```
